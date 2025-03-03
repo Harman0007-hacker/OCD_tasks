@@ -1,0 +1,35 @@
+#include<bits/stdc++.h>
+using namespace std;
+vector<vector<int>>floodFill(vector<vector<int>> &image, int sr, int sc, int color){
+    queue<pair<int, int>>q;
+    vector<int>dr = {0, 1, 0, -1};
+    vector<int>dc = {-1, 0, 1, 0};
+    q.push({sr, sc});
+    int orgColor = image[sr][sc];
+    while(!q.empty()){
+        pair<int, int> node = q.front();
+        q.pop();
+        int r = node.first;
+        int c = node.second;
+        image[r][c] = color;
+        for(int i=0; i<4; i++){
+            if(r+dr[i] >=0 && r+dr[i]<image.size() && c+dc[i]>=0 && c+dc[i] < image[0].size() && image[r+dr[i]][c+dc[i]] == orgColor){
+                
+                image[r+dr[i]][c+dc[i]] = color;
+                q.push({r+dr[i], c+dc[i]}); 
+            }
+        }
+    }
+    for(int i=0; i<image.size(); i++){
+        for(int j=0; j<image[0].size(); j++){
+            cout<<image[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+    return image;
+}
+int main(){
+    vector<vector<int>>image = {{0, 0, 0}, {0, 1, 0}};
+    floodFill(image, 1, 1, 2);
+    return 0;
+}
